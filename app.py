@@ -1,8 +1,8 @@
 import streamlit as st
-st.set_page_config(page_title="CIMB Business Onboarding", page_icon="🏦", layout="wide")
-# =========================
+st.set_page_config(page_title="CIMB Business Account Opening", page_icon="🏦", layout="wide")
+# =========================================================
 # STYLE
-# =========================
+# =========================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -11,123 +11,194 @@ html, body, [class*="css"]  {
 }
 :root {
    --cimb-red: #D71920;
-   --cimb-dark-red: #B31217;
-   --cimb-soft-red: #FDEBEC;
-   --cimb-bg: #F8F9FB;
-   --text-dark: #1F2937;
-   --muted: #6B7280;
-   --card-border: #E5E7EB;
+   --cimb-dark: #B31217;
+   --cimb-light: #FDEBEC;
+   --soft-gray: #F4F5F7;
+   --mid-gray: #6B7280;
+   --border: #E5E7EB;
+   --text: #1F2937;
 }
 .stApp {
-   background: linear-gradient(180deg, #fff 0%, #fff7f7 100%);
+   background: #ffffff;
 }
-.main-title {
-   font-size: 2rem;
-   font-weight: 700;
+.topbar {
+   background: white;
+   border-bottom: 1px solid #eee;
+   padding: 10px 8px 14px 8px;
+   margin-bottom: 0;
+}
+.nav-pill {
+   display: inline-block;
+   margin-right: 10px;
+   color: #374151;
+   font-weight: 600;
+   font-size: 14px;
+}
+.logo-wrap {
+   text-align: center;
+   font-size: 28px;
+   font-weight: 800;
    color: var(--cimb-red);
-   margin-bottom: 0.2rem;
+   letter-spacing: 1px;
 }
-.subtle {
-   color: var(--muted);
-   font-size: 0.95rem;
-   margin-bottom: 1rem;
+.top-actions {
+   text-align: right;
+   font-weight: 600;
+   color: #374151;
+   font-size: 14px;
+}
+.hero {
+   background: linear-gradient(135deg, #d71920 0%, #b31217 60%, #8f0f13 100%);
+   border-radius: 22px;
+   padding: 0;
+   overflow: hidden;
+   margin-top: 14px;
+   margin-bottom: 16px;
+}
+.hero-inner {
+   display: grid;
+   grid-template-columns: 1.1fr 1fr;
+   min-height: 360px;
+}
+.hero-left {
+   background:
+       linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)),
+       url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80');
+   background-size: cover;
+   background-position: center;
+   min-height: 360px;
+}
+.hero-right {
+   color: white;
+   padding: 42px 38px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}
+.hero-kicker {
+   font-size: 13px;
+   letter-spacing: 0.12em;
+   text-transform: uppercase;
+   opacity: 0.9;
+   margin-bottom: 10px;
+   font-weight: 700;
+}
+.hero-title {
+   font-size: 34px;
+   line-height: 1.15;
+   font-weight: 800;
+   margin-bottom: 14px;
+}
+.hero-sub {
+   font-size: 16px;
+   line-height: 1.7;
+   opacity: 0.95;
+   margin-bottom: 18px;
+}
+.info-banner {
+   background: white;
+   border: 1px solid var(--border);
+   border-radius: 18px;
+   padding: 16px 18px;
+   margin: 6px 0 18px 0;
+   box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+}
+.radio-card {
+   background: white;
+   border: 1px solid var(--border);
+   border-radius: 18px;
+   padding: 18px;
+   margin-bottom: 18px;
+   box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+}
+.help-banner {
+   background: #efefef;
+   border-radius: 18px;
+   padding: 24px;
+   margin-top: 12px;
+}
+.help-title {
+   font-size: 24px;
+   font-weight: 800;
+   margin-bottom: 18px;
+   color: #1f2937;
+}
+.help-card {
+   background: white;
+   border-radius: 16px;
+   border: 1px solid #ddd;
+   padding: 18px;
+   text-align: center;
+   min-height: 150px;
+}
+.page-title {
+   font-size: 30px;
+   font-weight: 800;
+   color: var(--cimb-red);
+   margin-bottom: 4px;
+}
+.page-sub {
+   color: var(--mid-gray);
+   margin-bottom: 10px;
 }
 .form-card {
    background: white;
-   border: 1px solid var(--card-border);
+   border: 1px solid var(--border);
    border-radius: 18px;
-   padding: 1.25rem 1.25rem 1rem 1.25rem;
-   box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-   margin-bottom: 1rem;
+   padding: 20px;
+   margin-top: 12px;
+   box-shadow: 0 8px 22px rgba(0,0,0,0.04);
 }
 .section-title {
-   font-size: 1.1rem;
-   font-weight: 700;
-   color: var(--text-dark);
-   margin-bottom: 0.25rem;
+   font-size: 20px;
+   font-weight: 800;
+   color: #111827;
+   margin-bottom: 4px;
 }
 .section-subtitle {
-   color: var(--muted);
-   margin-bottom: 1rem;
-   font-size: 0.92rem;
+   color: var(--mid-gray);
+   margin-bottom: 16px;
+   font-size: 14px;
 }
-.milestone-wrap {
-   margin: 0.8rem 0 1.2rem 0;
+.summary-box {
+   background: #fff8f8;
+   border: 1px solid #f3c6c8;
+   border-radius: 16px;
+   padding: 18px;
+   margin-top: 16px;
 }
-.milestone-row {
-   display: flex;
-   gap: 12px;
-   flex-wrap: wrap;
-   margin-top: 0.75rem;
+.small-note {
+   color: #6b7280;
+   font-size: 13px;
 }
-.milestone {
-   padding: 8px 12px;
-   border-radius: 999px;
-   border: 1px solid #f1c4c6;
-   background: #fff;
-   color: #8B1E22;
-   font-size: 0.85rem;
-   font-weight: 600;
-}
-.milestone.active {
-   background: var(--cimb-red);
-   color: white;
-   border-color: var(--cimb-red);
-}
-.milestone.done {
-   background: #FDEBEC;
-   color: var(--cimb-dark-red);
-   border-color: #f3b4b7;
-}
-.summary-kpi {
-   background: #fff;
-   border: 1px solid var(--card-border);
-   border-radius: 14px;
-   padding: 1rem;
-   text-align: center;
-}
-.summary-kpi h3 {
-   margin: 0;
+.mandatory {
    color: var(--cimb-red);
+   font-weight: 700;
 }
-.summary-kpi p {
-   margin: 0.3rem 0 0 0;
-   color: var(--muted);
+.footer-space {
+   height: 30px;
 }
-.stButton > button {
+div[data-testid="stButton"] > button {
    border-radius: 12px;
-   font-weight: 600;
-   padding: 0.6rem 1rem;
-   border: 1px solid var(--cimb-red);
+   font-weight: 700;
+   min-height: 44px;
 }
-.primary-btn button,
-div[data-testid="column"] .stButton > button[kind="primary"] {
-   background: var(--cimb-red) !important;
+div[data-testid="stButton"] > button[kind="primary"] {
+   background: linear-gradient(90deg, #E23A40 0%, #D71920 50%, #B31217 100%) !important;
    color: white !important;
-   border: 1px solid var(--cimb-red) !important;
+   border: none !important;
 }
-.note-box {
-   background: #fff7e6;
-   border: 1px solid #f5d38c;
-   color: #8a5a00;
-   padding: 0.9rem 1rem;
+div[data-testid="stDownloadButton"] > button {
    border-radius: 12px;
-   margin-top: 0.75rem;
 }
-.blocked-box {
-   background: #fff0f1;
-   border: 1px solid #f5a2a7;
-   color: #9f1239;
-   padding: 1rem;
-   border-radius: 14px;
-   font-weight: 600;
-   margin-top: 1rem;
+.stProgress > div > div > div > div {
+   background-color: #D71920;
 }
 </style>
 """, unsafe_allow_html=True)
-# =========================
+# =========================================================
 # DATA
-# =========================
+# =========================================================
 BUSINESS_TYPES = [
    "Sole Proprietory",
    "Partnership",
@@ -171,8 +242,7 @@ COUNTRIES = [
    "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
    "Yemen", "Zambia", "Zimbabwe"
 ]
-RESTRICTED_COUNTRY = "North Korea"
-SANCTIONED_COUNTRIES = [
+RISK_COUNTRY_TABLE = [
    "Afghanistan", "Belarus", "Central African Republic",
    "Crimea Region (including Donetsk People’s Republic, Luhansk People’s Republic, and non-government-controlled areas of Zaporizhzhia and Kherson region of Ukraine)",
    "Democratic Republic of Congo", "Haiti", "Iran", "Iraq", "Lebanon", "Libya",
@@ -205,11 +275,20 @@ PAGES = [
    "Banking Relationship",
    "Review & Submit",
 ]
-# =========================
+MANDATORY_KEYS = {
+   "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13"
+}
+# =========================================================
 # SESSION STATE
-# =========================
+# =========================================================
+if "screen" not in st.session_state:
+   st.session_state.screen = "landing"
 if "step" not in st.session_state:
    st.session_state.step = 0
+if "show_restricted_dialog" not in st.session_state:
+   st.session_state.show_restricted_dialog = False
+if "show_submit_dialog" not in st.session_state:
+   st.session_state.show_submit_dialog = False
 if "form" not in st.session_state:
    st.session_state.form = {
        "Q1": None,
@@ -223,44 +302,64 @@ if "form" not in st.session_state:
        "Q6": None,
        "Q7": None,
        "Q8": None,
-       "Q9": None,
+       "Q9": "",
        "Q10": "",
        "Q11": None,
        "Q12": None,
        "Q13": None,
        "Q13a": "",
    }
-# =========================
+# =========================================================
 # HELPERS
-# =========================
+# =========================================================
+def label_required(text: str):
+   return f"{text} *"
 def go_next():
    if st.session_state.step < len(PAGES) - 1:
        st.session_state.step += 1
 def go_back():
    if st.session_state.step > 0:
        st.session_state.step -= 1
-def progress_header():
+def top_header():
+   left, center, right = st.columns([4, 2, 2])
+   with left:
+       st.markdown(
+           """
+<div class="topbar">
+<span class="nav-pill">💼 Business Day to Day</span>
+<span class="nav-pill">🚀 Business Solutions</span>
+<span class="nav-pill">☪️ Islamic Banking</span>
+<span class="nav-pill">🎁 Promotions</span>
+<span class="nav-pill">📱 Digital Services</span>
+<span class="nav-pill">🛟 Help & Support</span>
+</div>
+           """,
+           unsafe_allow_html=True
+       )
+   with center:
+       st.markdown('<div class="logo-wrap">CIMB</div>', unsafe_allow_html=True)
+   with right:
+       st.markdown(
+           '<div class="top-actions">🔍 Search&nbsp;&nbsp;&nbsp;&nbsp;👤 Login</div>',
+           unsafe_allow_html=True
+       )
+def render_progress():
    current = st.session_state.step
    pct = (current + 1) / len(PAGES)
-   st.markdown('<div class="main-title">🏦 CIMB Business Onboarding</div>', unsafe_allow_html=True)
+   st.markdown(f'<div class="page-title">Open a Business Account</div>', unsafe_allow_html=True)
    st.markdown(
-       '<div class="subtle">Pre-screening for non-individual onboarding. Complete each section and click Next to continue.</div>',
-       unsafe_allow_html=True,
+       '<div class="page-sub">Complete the form in a few simple steps. Fields marked with <span class="mandatory">*</span> are mandatory.</div>',
+       unsafe_allow_html=True
    )
-   st.markdown('<div class="milestone-wrap">', unsafe_allow_html=True)
    st.progress(pct)
-   pills = []
-   for i, page in enumerate(PAGES):
-       cls = "milestone"
-       if i < current:
-           cls += " done"
-       elif i == current:
-           cls += " active"
-       pills.append(f'<span class="{cls}">{i+1}. {page}</span>')
-   st.markdown(f'<div class="milestone-row">{"".join(pills)}</div>', unsafe_allow_html=True)
-   st.markdown('</div>', unsafe_allow_html=True)
-def nav_buttons(show_next=True, next_label="Next"):
-   c1, c2, c3 = st.columns([1, 1, 4])
+   c = st.columns(len(PAGES))
+   for i, name in enumerate(PAGES):
+       if i == current:
+           c[i].markdown(f"**{i+1}. {name}**")
+       else:
+           c[i].caption(f"{i+1}. {name}")
+def nav_buttons(next_label="Next", show_next=True):
+   c1, c2, c3 = st.columns([1, 1, 5])
    with c1:
        if st.session_state.step > 0:
            if st.button("← Back", use_container_width=True):
@@ -271,244 +370,283 @@ def nav_buttons(show_next=True, next_label="Next"):
            if st.button(next_label, type="primary", use_container_width=True):
                go_next()
                st.rerun()
-def yes_no(label, key, horizontal=True):
+def yes_no(label, key):
    current = st.session_state.form.get(key)
-   idx = 0 if current in (None, "Yes") else 1
-   value = st.radio(label, ["Yes", "No"], index=idx, horizontal=horizontal, key=f"widget_{key}")
-   st.session_state.form[key] = value
-   return value
-def summary_value(val):
-   if val is None or val == "":
-       return "-"
+   index = 0 if current in (None, "Yes") else 1
+   val = st.radio(label, ["Yes", "No"], index=index, horizontal=True, key=f"widget_{key}")
+   st.session_state.form[key] = val
    return val
-# =========================
-# UI
-# =========================
-progress_header()
-# -------------------------
-# PAGE 1
-# -------------------------
-if st.session_state.step == 0:
-   st.markdown('<div class="form-card">', unsafe_allow_html=True)
-   st.markdown('<div class="section-title">🏢 Company Background</div>', unsafe_allow_html=True)
-   st.markdown('<div class="section-subtitle">Basic entity classification and registration routing.</div>', unsafe_allow_html=True)
-   st.session_state.form["Q1"] = st.selectbox(
-       "Q1. Type of Business",
-       BUSINESS_TYPES,
-       index=BUSINESS_TYPES.index(st.session_state.form["Q1"]) if st.session_state.form["Q1"] in BUSINESS_TYPES else 0
+def summary_value(v):
+   if v is None or v == "":
+       return "Not provided"
+   return v
+@st.dialog("Access Restricted")
+def restricted_popup():
+   st.error("Access restricted for Country of Registration: North Korea.")
+   if st.button("Close", type="primary"):
+       st.session_state.show_restricted_dialog = False
+       st.rerun()
+@st.dialog("Submission Successful")
+def submitted_popup():
+   st.success("Submitted.")
+   if st.button("Close", type="primary"):
+       st.session_state.show_submit_dialog = False
+       st.rerun()
+# =========================================================
+# HEADER
+# =========================================================
+top_header()
+# =========================================================
+# LANDING PAGE
+# =========================================================
+if st.session_state.screen == "landing":
+   st.markdown(
+       """
+<div class="hero">
+<div class="hero-inner">
+<div class="hero-left"></div>
+<div class="hero-right">
+<div class="hero-kicker">Digital Services</div>
+<div class="hero-title">Save time to check eligibility and apply online for your account in a few clicks.</div>
+<div class="hero-sub">
+                       Start your business banking journey with a simpler digital onboarding experience.
+                       Check your eligibility, prepare your information, and submit online with ease.
+</div>
+</div>
+</div>
+</div>
+       """,
+       unsafe_allow_html=True
    )
-   needs_q1a = st.session_state.form["Q1"] != "Sole Proprietory"
-   if needs_q1a:
-       yes_no(
-           "Q1a. Is your company a subsidiary of a Public Listed company listed on the Main Board / Large Firms / MNCs / GLCs / MKDs / State owned enterprises?",
-           "Q1a"
+   c1, c2, c3 = st.columns([4, 1.4, 1.2])
+   with c2:
+       if st.button("I'm interested", type="primary", use_container_width=True):
+           st.session_state.screen = "form"
+           st.rerun()
+   st.markdown(
+       """
+<div class="info-banner">
+<div style="display:flex; justify-content:space-between; align-items:center; gap:20px;">
+<div>
+<div style="font-weight:800; font-size:18px; color:#111827;">Already an existing user?</div>
+<div style="color:#6B7280;">Access your accounts on BizChannel@CIMB</div>
+</div>
+</div>
+</div>
+       """,
+       unsafe_allow_html=True
+   )
+   c1, c2, c3 = st.columns([5, 1.2, 1])
+   with c2:
+       st.button("Login", type="primary", use_container_width=True, key="landing_login")
+   st.markdown('<div class="radio-card">', unsafe_allow_html=True)
+   nav = st.radio(
+       "Navigate",
+       ["FAQ", "Products and Packages", "First Time Login Guide", "User Guides and Forms"],
+       horizontal=True,
+       label_visibility="collapsed"
+   )
+   if nav == "FAQ":
+       st.markdown("### Frequently Asked Questions")
+       st.write("- Who is eligible to apply online for a business account?")
+       st.write("- What documents should I prepare before starting?")
+       st.write("- How long does the online application take?")
+       st.write("- Can I continue later if I do not finish in one session?")
+   elif nav == "Products and Packages":
+       st.markdown("### Products and Packages")
+       st.write("- Business Current Account")
+       st.write("- SME banking solutions")
+       st.write("- Payment and collection services")
+       st.write("- Digital banking tools for day-to-day operations")
+   elif nav == "First Time Login Guide":
+       st.markdown("### First Time Login Guide")
+       st.write("1. Register your profile")
+       st.write("2. Verify your identity")
+       st.write("3. Set up credentials")
+       st.write("4. Log in to access your services")
+   elif nav == "User Guides and Forms":
+       st.markdown("### User Guides and Forms")
+       st.write("- Account opening guide")
+       st.write("- BizChannel onboarding guide")
+       st.write("- Customer information forms")
+       st.write("- Supporting document checklist")
+   st.markdown('</div>', unsafe_allow_html=True)
+   st.markdown(
+       """
+<div class="help-banner">
+<div class="help-title">Need more information?</div>
+</div>
+       """,
+       unsafe_allow_html=True
+   )
+   h1, h2, h3, h4 = st.columns(4)
+   with h1:
+       st.markdown('<div class="help-card"><div style="font-size:34px;">🛟</div><div style="font-weight:800; margin-top:6px;">Customer Help Centre</div><div style="color:#6B7280; margin-top:8px;">Find answers and self-service help.</div></div>', unsafe_allow_html=True)
+   with h2:
+       st.markdown('<div class="help-card"><div style="font-size:34px;">✉️</div><div style="font-weight:800; margin-top:6px;">Email Us</div><div style="color:#6B7280; margin-top:8px;">Reach out for general enquiries.</div></div>', unsafe_allow_html=True)
+   with h3:
+       st.markdown('<div class="help-card"><div style="font-size:34px;">📍</div><div style="font-weight:800; margin-top:6px;">Visit a Branch</div><div style="color:#6B7280; margin-top:8px;">Speak to our staff in person.</div></div>', unsafe_allow_html=True)
+   with h4:
+       st.markdown('<div class="help-card"><div style="font-size:34px;">📞</div><div style="font-weight:800; margin-top:6px;">Call Us at XX</div><div style="color:#6B7280; margin-top:8px;">Contact our support hotline.</div></div>', unsafe_allow_html=True)
+# =========================================================
+# FORM PAGE
+# =========================================================
+else:
+   render_progress()
+   # PAGE 1
+   if st.session_state.step == 0:
+       st.markdown('<div class="form-card">', unsafe_allow_html=True)
+       st.markdown('<div class="section-title">Company Background</div>', unsafe_allow_html=True)
+       st.markdown('<div class="section-subtitle">Tell us about your business type and registration profile.</div>', unsafe_allow_html=True)
+       st.session_state.form["Q1"] = st.selectbox(
+           label_required("Q1. Type of Business"),
+           BUSINESS_TYPES,
+           index=BUSINESS_TYPES.index(st.session_state.form["Q1"]) if st.session_state.form["Q1"] in BUSINESS_TYPES else 0
        )
-       if st.session_state.form["Q1a"] == "Yes":
-           st.session_state.form["Q1b"] = st.text_input(
-               "Q1b. Name of Parent Company",
-               value=st.session_state.form["Q1b"]
+       if st.session_state.form["Q1"] != "Sole Proprietory":
+           yes_no(
+               label_required("Q1a. Is your company a subsidiary of a Public Listed company listed on the Main Board / Large Firms / MNCs / GLCs / MKDs / State owned enterprises?"),
+               "Q1a"
+           )
+           if st.session_state.form["Q1a"] == "Yes":
+               st.session_state.form["Q1b"] = st.text_input(
+                   "Q1b. Name of Parent Company",
+                   value=st.session_state.form["Q1b"]
+               )
+           else:
+               st.session_state.form["Q1b"] = ""
+       else:
+           st.session_state.form["Q1a"] = None
+           st.session_state.form["Q1b"] = ""
+       yes_no(label_required("Q2. Malaysia Incorporated Business?"), "Q2")
+       if st.session_state.form["Q2"] == "No":
+           st.session_state.form["Q2a"] = st.selectbox(
+               label_required("Q2a. Country of Registration"),
+               COUNTRIES,
+               index=COUNTRIES.index(st.session_state.form["Q2a"]) if st.session_state.form["Q2a"] in COUNTRIES else 0
+           )
+           if st.session_state.form["Q2a"] == "North Korea":
+               st.session_state.show_restricted_dialog = True
+       else:
+           st.session_state.form["Q2a"] = None
+       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
+       st.markdown('</div>', unsafe_allow_html=True)
+       nav_buttons()
+   # PAGE 2
+   elif st.session_state.step == 1:
+       st.markdown('<div class="form-card">', unsafe_allow_html=True)
+       st.markdown('<div class="section-title">Compliance & Risk Screening</div>', unsafe_allow_html=True)
+       st.markdown('<div class="section-subtitle">Please answer the following compliance questions.</div>', unsafe_allow_html=True)
+       st.markdown("**Q3. Listed higher-risk countries / jurisdictions**")
+       st.table({"Countries / Jurisdictions": RISK_COUNTRY_TABLE})
+       yes_no(label_required("Do you transact with or operate in the listed higher-risk countries / jurisdictions?"), "Q3")
+       yes_no(label_required("Q4. Government / State Government Owned?"), "Q4")
+       yes_no(label_required("Q5. Are any directors/shareholders/signatories politically exposed persons (PEPs)?"), "Q5")
+       yes_no(label_required("Q6. Do you or your directors have ongoing legal cases related to fraud, insolvency or financial crimes?"), "Q6")
+       yes_no(label_required("Q7. Has your business ever been subject to compliance actions or suspicious activity reporting?"), "Q7")
+       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
+       st.markdown('</div>', unsafe_allow_html=True)
+       nav_buttons()
+   # PAGE 3
+   elif st.session_state.step == 2:
+       st.markdown('<div class="form-card">', unsafe_allow_html=True)
+       st.markdown('<div class="section-title">Business Profile & Details</div>', unsafe_allow_html=True)
+       st.markdown('<div class="section-subtitle">Provide your business details below.</div>', unsafe_allow_html=True)
+       st.session_state.form["Q8"] = st.selectbox(
+           label_required("Q8. Nature of Business / Industry"),
+           INDUSTRIES,
+           index=INDUSTRIES.index(st.session_state.form["Q8"]) if st.session_state.form["Q8"] in INDUSTRIES else 0
+       )
+       c1, c2 = st.columns(2)
+       with c1:
+           st.session_state.form["Q9"] = st.text_input(
+               label_required("Q9. Registered Business Name"),
+               value=st.session_state.form["Q9"]
+           )
+       with c2:
+           st.session_state.form["Q10"] = st.text_input(
+               label_required("Q10. Business Registration Number"),
+               value=st.session_state.form["Q10"]
+           )
+       c3, c4 = st.columns(2)
+       with c3:
+           options_owners = ["1", "2-10", "11-50", ">50"]
+           st.session_state.form["Q11"] = st.selectbox(
+               label_required("Q11. Number of shareholders / owners in the company"),
+               options_owners,
+               index=options_owners.index(st.session_state.form["Q11"]) if st.session_state.form["Q11"] in options_owners else 0
+           )
+       with c4:
+           yes_no(label_required("Q12. Bumiputera-controlled Company? (>25% shareholding)"), "Q12")
+       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
+       st.markdown('</div>', unsafe_allow_html=True)
+       nav_buttons()
+   # PAGE 4
+   elif st.session_state.step == 3:
+       st.markdown('<div class="form-card">', unsafe_allow_html=True)
+       st.markdown('<div class="section-title">Banking Relationship</div>', unsafe_allow_html=True)
+       st.markdown('<div class="section-subtitle">Let us know if you already bank with CIMB.</div>', unsafe_allow_html=True)
+       yes_no(label_required("Q13. Does your company have an existing Business Current Account with CIMB?"), "Q13")
+       if st.session_state.form["Q13"] == "Yes":
+           st.session_state.form["Q13a"] = st.text_input(
+               "Q13a. Existing CIMB Business Current Account Number",
+               value=st.session_state.form["Q13a"],
+               placeholder="Numeric account number"
            )
        else:
-           st.session_state.form["Q1b"] = ""
-   else:
-       st.session_state.form["Q1a"] = None
-       st.session_state.form["Q1b"] = ""
-   yes_no("Q2. Malaysia Incorporated Business?", "Q2")
-   restricted = False
-   if st.session_state.form["Q2"] == "No":
-       st.session_state.form["Q2a"] = st.selectbox(
-           "Q2a. Country of Registration",
-           COUNTRIES,
-           index=COUNTRIES.index(st.session_state.form["Q2a"]) if st.session_state.form["Q2a"] in COUNTRIES else 0
-       )
-       if st.session_state.form["Q2a"] == RESTRICTED_COUNTRY:
-           restricted = True
-           st.markdown(
-               '<div class="blocked-box">⛔ Access restricted due to country of registration.</div>',
-               unsafe_allow_html=True
-           )
-   else:
-       st.session_state.form["Q2a"] = None
-   st.markdown('</div>', unsafe_allow_html=True)
-   if restricted:
-       c1, c2 = st.columns([1, 5])
+           st.session_state.form["Q13a"] = ""
+       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
+       st.markdown('</div>', unsafe_allow_html=True)
+       nav_buttons(next_label="Review")
+   # PAGE 5
+   elif st.session_state.step == 4:
+       d = st.session_state.form
+       st.markdown('<div class="form-card">', unsafe_allow_html=True)
+       st.markdown('<div class="section-title">Review & Submit</div>', unsafe_allow_html=True)
+       st.markdown('<div class="section-subtitle">Please review your information before submission.</div>', unsafe_allow_html=True)
+       st.markdown('<div class="summary-box">', unsafe_allow_html=True)
+       st.markdown("### Company Background")
+       st.write({
+           "Type of Business": summary_value(d["Q1"]),
+           "Subsidiary of listed / state-linked entity": summary_value(d["Q1a"]),
+           "Parent Company Name": summary_value(d["Q1b"]),
+           "Malaysia Incorporated Business": summary_value(d["Q2"]),
+           "Country of Registration": summary_value(d["Q2a"]),
+       })
+       st.markdown("### Compliance & Risk Screening")
+       st.write({
+           "Transacts / operates in listed higher-risk jurisdictions": summary_value(d["Q3"]),
+           "Government / State Government Owned": summary_value(d["Q4"]),
+           "Directors / shareholders / signatories are PEPs": summary_value(d["Q5"]),
+           "Ongoing legal cases related to fraud / insolvency / financial crimes": summary_value(d["Q6"]),
+           "Subject to compliance actions or suspicious activity reporting": summary_value(d["Q7"]),
+       })
+       st.markdown("### Business Profile & Details")
+       st.write({
+           "Nature of Business / Industry": summary_value(d["Q8"]),
+           "Registered Business Name": summary_value(d["Q9"]),
+           "Business Registration Number": summary_value(d["Q10"]),
+           "Number of shareholders / owners": summary_value(d["Q11"]),
+           "Bumiputera-controlled company": summary_value(d["Q12"]),
+       })
+       st.markdown("### Banking Relationship")
+       st.write({
+           "Existing CIMB Business Current Account": summary_value(d["Q13"]),
+           "Existing CIMB Business Current Account Number": summary_value(d["Q13a"]),
+       })
+       st.markdown('</div>', unsafe_allow_html=True)
+       c1, c2, c3 = st.columns([1, 1, 4])
        with c1:
            if st.button("← Back", use_container_width=True):
                go_back()
                st.rerun()
-   else:
-       nav_buttons()
-# -------------------------
-# PAGE 2
-# -------------------------
-elif st.session_state.step == 1:
-   st.markdown('<div class="form-card">', unsafe_allow_html=True)
-   st.markdown('<div class="section-title">🛡️ Compliance & Risk Screening</div>', unsafe_allow_html=True)
-   st.markdown('<div class="section-subtitle">High-level risk filters and red-flag declarations.</div>', unsafe_allow_html=True)
-   yes_no(
-       "Q3. Do you transact with or operate in the listed higher-risk countries/jurisdictions?",
-       "Q3"
-   )
-   with st.expander("View listed countries / jurisdictions"):
-       st.write(", ".join(SANCTIONED_COUNTRIES))
-   yes_no("Q4. Government / State Government Owned?", "Q4")
-   yes_no("Q5. Are any directors/shareholders/signatories politically exposed persons (PEPs)?", "Q5")
-   yes_no("Q6. Do you or your directors have ongoing legal cases related to fraud, insolvency or financial crimes?", "Q6")
-   yes_no("Q7. Has your business ever been subject to compliance actions or suspicious activity reporting?", "Q7")
-   flags = []
-   if st.session_state.form["Q3"] == "Yes":
-       flags.append("Jurisdiction exposure declared")
-   if st.session_state.form["Q4"] == "Yes":
-       flags.append("Government-linked ownership")
-   if st.session_state.form["Q5"] == "Yes":
-       flags.append("PEP declared")
-   if st.session_state.form["Q6"] == "Yes":
-       flags.append("Legal / financial crime case declared")
-   if st.session_state.form["Q7"] == "Yes":
-       flags.append("Compliance / SAR history declared")
-   if flags:
-       st.markdown('<div class="note-box">⚠️ Screening flags detected: ' + "; ".join(flags) + '</div>', unsafe_allow_html=True)
-   st.markdown('</div>', unsafe_allow_html=True)
-   nav_buttons()
-# -------------------------
-# PAGE 3
-# -------------------------
-elif st.session_state.step == 2:
-   st.markdown('<div class="form-card">', unsafe_allow_html=True)
-   st.markdown('<div class="section-title">📋 Business Profile & Details</div>', unsafe_allow_html=True)
-   st.markdown('<div class="section-subtitle">Core company information and ownership profile.</div>', unsafe_allow_html=True)
-   st.session_state.form["Q8"] = st.selectbox(
-       "Q8. Nature of Business / Industry",
-       INDUSTRIES,
-       index=INDUSTRIES.index(st.session_state.form["Q8"]) if st.session_state.form["Q8"] in INDUSTRIES else 0
-   )
-   c1, c2 = st.columns(2)
-   with c1:
-       st.session_state.form["Q9"] = st.text_input(
-           "Q9. Registered Business Name",
-           value=st.session_state.form["Q9"]
-       )
-   with c2:
-       st.session_state.form["Q10"] = st.text_input(
-           "Q10. Business Registration Number",
-           value=st.session_state.form["Q10"]
-       )
-   c3, c4 = st.columns(2)
-   with c3:
-       st.session_state.form["Q11"] = st.selectbox(
-           "Q11. Number of shareholders / owners in the company",
-           ["1", "2-10", "11-50", ">50"],
-           index=["1", "2-10", "11-50", ">50"].index(st.session_state.form["Q11"]) if st.session_state.form["Q11"] in ["1", "2-10", "11-50", ">50"] else 0
-       )
-   with c4:
-       yes_no("Q12. Bumiputera-controlled Company? (>25% shareholding)", "Q12", horizontal=True)
-   st.markdown('</div>', unsafe_allow_html=True)
-   nav_buttons()
-# -------------------------
-# PAGE 4
-# -------------------------
-elif st.session_state.step == 3:
-   st.markdown('<div class="form-card">', unsafe_allow_html=True)
-   st.markdown('<div class="section-title">🏦 Banking Relationship</div>', unsafe_allow_html=True)
-   st.markdown('<div class="section-subtitle">Existing banking relationship check.</div>', unsafe_allow_html=True)
-   yes_no("Q13. Does your company have an existing Business Current Account with CIMB?", "Q13")
-   if st.session_state.form["Q13"] == "Yes":
-       st.session_state.form["Q13a"] = st.text_input(
-           "Q13a. Existing CIMB Business Current Account Number",
-           value=st.session_state.form["Q13a"],
-           placeholder="Numeric account number"
-       )
-   else:
-       st.session_state.form["Q13a"] = ""
-   st.markdown('</div>', unsafe_allow_html=True)
-   nav_buttons(next_label="Review")
-# -------------------------
-# PAGE 5
-# -------------------------
-elif st.session_state.step == 4:
-   data = st.session_state.form
-   st.markdown('<div class="form-card">', unsafe_allow_html=True)
-   st.markdown('<div class="section-title">✅ Review & Submit</div>', unsafe_allow_html=True)
-   st.markdown('<div class="section-subtitle">Check the captured answers before submission.</div>', unsafe_allow_html=True)
-   score = 0
-   flags = []
-   if data["Q3"] == "Yes":
-       score += 25
-       flags.append("Jurisdiction exposure")
-   if data["Q4"] == "Yes":
-       score += 15
-       flags.append("Government ownership")
-   if data["Q5"] == "Yes":
-       score += 30
-       flags.append("PEP declared")
-   if data["Q6"] == "Yes":
-       score += 30
-       flags.append("Legal / financial crime case")
-   if data["Q7"] == "Yes":
-       score += 25
-       flags.append("Compliance action / SAR history")
-   if data["Q2a"] == "North Korea":
-       score += 100
-       flags.append("Restricted jurisdiction")
-   risk_level = "Low"
-   if score >= 60:
-       risk_level = "High"
-   elif score >= 25:
-       risk_level = "Medium"
-   k1, k2, k3 = st.columns(3)
-   with k1:
-       st.markdown(f'<div class="summary-kpi"><h3>{score}</h3><p>Risk Score</p></div>', unsafe_allow_html=True)
-   with k2:
-       st.markdown(f'<div class="summary-kpi"><h3>{risk_level}</h3><p>Risk Level</p></div>', unsafe_allow_html=True)
-   with k3:
-       st.markdown(f'<div class="summary-kpi"><h3>{len(flags)}</h3><p>Flags Triggered</p></div>', unsafe_allow_html=True)
-   st.markdown("### Company Background")
-   st.write({
-       "Q1 Type of Business": summary_value(data["Q1"]),
-       "Q1a Subsidiary of listed / state-linked entity": summary_value(data["Q1a"]),
-       "Q1b Parent Company": summary_value(data["Q1b"]),
-       "Q2 Malaysia Incorporated": summary_value(data["Q2"]),
-       "Q2a Country of Registration": summary_value(data["Q2a"]),
-   })
-   st.markdown("### Compliance & Risk Screening")
-   st.write({
-       "Q3 High-risk country exposure": summary_value(data["Q3"]),
-       "Q4 Government owned": summary_value(data["Q4"]),
-       "Q5 PEP": summary_value(data["Q5"]),
-       "Q6 Legal / fraud / insolvency cases": summary_value(data["Q6"]),
-       "Q7 Compliance / suspicious activity history": summary_value(data["Q7"]),
-   })
-   st.markdown("### Business Profile & Details")
-   st.write({
-       "Q8 Industry": summary_value(data["Q8"]),
-       "Q9 Registered Business Name": summary_value(data["Q9"]),
-       "Q10 Registration Number": summary_value(data["Q10"]),
-       "Q11 Number of Shareholders/Owners": summary_value(data["Q11"]),
-       "Q12 Bumiputera-controlled": summary_value(data["Q12"]),
-   })
-   st.markdown("### Banking Relationship")
-   st.write({
-       "Q13 Existing CIMB Business Current Account": summary_value(data["Q13"]),
-       "Q13a Existing Account Number": summary_value(data["Q13a"]),
-   })
-   if flags:
-       st.markdown("### 🚩 Screening Flags")
-       for f in flags:
-           st.warning(f)
-   st.download_button(
-       "⬇️ Download Submission JSON",
-       data=str(data),
-       file_name="cimb_onboarding_prescreening.json",
-       mime="application/json",
-       use_container_width=False
-   )
-   c1, c2, c3 = st.columns([1, 1, 4])
-   with c1:
-       if st.button("← Back", use_container_width=True):
-           go_back()
-           st.rerun()
-   with c2:
-       if st.button("Submit", type="primary", use_container_width=True):
-           st.success("Pre-screening submitted.")
-           st.balloons()
-   st.markdown('</div>', unsafe_allow_html=True)
+       with c2:
+           if st.button("Submit", type="primary", use_container_width=True):
+               st.session_state.show_submit_dialog = True
+               st.rerun()
+       st.markdown('</div>', unsafe_allow_html=True)
+   if st.session_state.show_restricted_dialog:
+       restricted_popup()
+   if st.session_state.show_submit_dialog:
+       submitted_popup()
+st.markdown('<div class="footer-space"></div>', unsafe_allow_html=True)
