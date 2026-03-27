@@ -1,252 +1,21 @@
 import streamlit as st
+import base64
+from pathlib import Path
 st.set_page_config(page_title="CIMB Business Account Opening", page_icon="🏦", layout="wide")
 # =========================================================
-# STYLE
+# LOCAL IMAGE PATHS
 # =========================================================
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-html, body, [class*="css"] {
-   font-family: 'Inter', sans-serif;
-}
-:root {
-   --cimb-red: #D71920;
-   --cimb-dark: #B31217;
-   --cimb-light: #FDEBEC;
-   --soft-gray: #F4F5F7;
-   --mid-gray: #6B7280;
-   --border: #E5E7EB;
-   --text: #1F2937;
-}
-.stApp {
-   background: #ffffff;
-}
-.top-shell {
-   border-bottom: 1px solid #efefef;
-   padding: 8px 0 14px 0;
-   margin-bottom: 6px;
-}
-.logo-click {
-   text-align: center;
-   font-weight: 800;
-   color: var(--cimb-red);
-   font-size: 26px;
-   cursor: pointer;
-   user-select: none;
-   display: inline-flex;
-   align-items: center;
-   gap: 8px;
-}
-.logo-wrap-center {
-   text-align: center;
-}
-.top-actions {
-   text-align: right;
-   font-weight: 600;
-   color: #374151;
-   font-size: 14px;
-   padding-top: 10px;
-}
-.hero {
-   background: linear-gradient(135deg, #d71920 0%, #b31217 60%, #8f0f13 100%);
-   border-radius: 24px;
-   overflow: hidden;
-   margin-top: 12px;
-   margin-bottom: 18px;
-}
-.hero-inner {
-   display: grid;
-   grid-template-columns: 1.05fr 1fr;
-   min-height: 380px;
-}
-.hero-left {
-   background:
-       linear-gradient(rgba(0,0,0,0.16), rgba(0,0,0,0.16)),
-       url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80');
-   background-size: cover;
-   background-position: center;
-   min-height: 380px;
-}
-.hero-right {
-   color: white;
-   padding: 42px 40px;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-}
-.hero-kicker {
-   font-size: 13px;
-   letter-spacing: 0.12em;
-   text-transform: uppercase;
-   opacity: 0.92;
-   margin-bottom: 10px;
-   font-weight: 700;
-}
-.hero-title {
-   font-size: 34px;
-   line-height: 1.15;
-   font-weight: 800;
-   margin-bottom: 14px;
-}
-.hero-sub {
-   font-size: 16px;
-   line-height: 1.7;
-   opacity: 0.96;
-   margin-bottom: 20px;
-}
-.info-banner {
-   background: white;
-   border: 1px solid var(--border);
-   border-radius: 18px;
-   padding: 18px;
-   margin: 6px 0 18px 0;
-   box-shadow: 0 6px 20px rgba(0,0,0,0.04);
-}
-.icon-tabs-wrap {
-   background: white;
-   border: 1px solid var(--border);
-   border-radius: 18px;
-   padding: 18px;
-   margin-bottom: 18px;
-   box-shadow: 0 6px 18px rgba(0,0,0,0.03);
-}
-.help-banner {
-   background: #eeeeee;
-   border-radius: 20px;
-   padding: 24px;
-   margin-top: 12px;
-}
-.help-title {
-   font-size: 24px;
-   font-weight: 800;
-   margin-bottom: 18px;
-   color: #1f2937;
-}
-.help-card {
-   background: white;
-   border-radius: 16px;
-   border: 1px solid #ddd;
-   padding: 18px;
-   text-align: center;
-   min-height: 150px;
-}
-.page-title {
-   font-size: 30px;
-   font-weight: 800;
-   color: var(--cimb-red);
-   margin-bottom: 4px;
-}
-.page-sub {
-   color: var(--mid-gray);
-   margin-bottom: 10px;
-}
-.form-card {
-   background: white;
-   border: 1px solid var(--border);
-   border-radius: 18px;
-   padding: 20px;
-   margin-top: 12px;
-   box-shadow: 0 8px 22px rgba(0,0,0,0.04);
-}
-.section-title {
-   font-size: 20px;
-   font-weight: 800;
-   color: #111827;
-   margin-bottom: 4px;
-}
-.section-subtitle {
-   color: var(--mid-gray);
-   margin-bottom: 16px;
-   font-size: 14px;
-}
-.summary-box {
-   background: #fff8f8;
-   border: 1px solid #f3c6c8;
-   border-radius: 16px;
-   padding: 18px;
-   margin-top: 16px;
-}
-.summary-block {
-   background: white;
-   border: 1px solid #f0d4d6;
-   border-radius: 14px;
-   padding: 16px;
-   margin-bottom: 14px;
-}
-.summary-row {
-   display: flex;
-   justify-content: space-between;
-   gap: 20px;
-   padding: 8px 0;
-   border-bottom: 1px solid #f3f4f6;
-}
-.summary-row:last-child {
-   border-bottom: none;
-}
-.summary-label {
-   color: #6b7280;
-   font-weight: 600;
-   min-width: 280px;
-}
-.summary-value {
-   color: #111827;
-   font-weight: 500;
-   text-align: right;
-}
-.small-note {
-   color: #6b7280;
-   font-size: 13px;
-}
-.mandatory {
-   color: var(--cimb-red);
-   font-weight: 700;
-}
-.footer-space {
-   height: 30px;
-}
-.step-pill {
-   padding: 10px 12px;
-   border-radius: 999px;
-   border: 1px solid #f0c7ca;
-   color: #8f1d22;
-   background: white;
-   font-size: 13px;
-   font-weight: 700;
-   text-align: center;
-}
-.step-pill.active {
-   background: var(--cimb-red);
-   color: white;
-   border-color: var(--cimb-red);
-}
-.step-pill.done {
-   background: #fdebec;
-   color: var(--cimb-dark);
-   border-color: #f2b8bc;
-}
-div[data-testid="stButton"] > button {
-   border-radius: 12px;
-   font-weight: 700;
-   min-height: 44px;
-}
-div[data-testid="stButton"] > button[kind="primary"] {
-   background: linear-gradient(90deg, #E23A40 0%, #D71920 50%, #B31217 100%) !important;
-   color: white !important;
-   border: none !important;
-}
-.stProgress > div > div > div > div {
-   background-color: #D71920;
-}
-.menu-item {
-   padding: 12px 10px;
-   border-radius: 10px;
-   border: 1px solid #efefef;
-   margin-bottom: 10px;
-   font-weight: 600;
-   background: #fff;
-}
-</style>
-""", unsafe_allow_html=True)
+CIMB_LOGO_PATH = r"C:\Users\MX446RB\OneDrive - EY\Documents\04 Project (local folder)\CIMB NIOT\prototype\assets\CIMB-Logo.png"
+HERO_IMAGE_PATH = r"C:\Users\MX446RB\OneDrive - EY\Documents\04 Project (local folder)\CIMB NIOT\prototype\assets\June-2023-BizChannel-hero-banner-image.png"
+
+def image_to_base64(path: str) -> str:
+   p = Path(path)
+   if not p.exists():
+       return ""
+   return base64.b64encode(p.read_bytes()).decode()
+
+logo_b64 = image_to_base64(CIMB_LOGO_PATH)
+hero_b64 = image_to_base64(HERO_IMAGE_PATH)
 # =========================================================
 # DATA
 # =========================================================
@@ -328,9 +97,9 @@ PAGES = [
 ]
 TAB_OPTIONS = {
    "FAQ": "❓",
-   "Products and Packages": "💼",
+   "Products & Packages": "💼",
    "First Time Login Guide": "🔐",
-   "User Guides and Forms": "📄",
+   "User Guides & Forms": "📄",
 }
 MENU_ITEMS = [
    "💼 Business Day to Day",
@@ -353,6 +122,8 @@ if "show_submit_dialog" not in st.session_state:
    st.session_state.show_submit_dialog = False
 if "show_menu" not in st.session_state:
    st.session_state.show_menu = False
+if "active_tab" not in st.session_state:
+   st.session_state.active_tab = "FAQ"
 if "form" not in st.session_state:
    st.session_state.form = {
        "Q1": None,
@@ -373,12 +144,261 @@ if "form" not in st.session_state:
        "Q13": None,
        "Q13a": "",
    }
+if "field_errors" not in st.session_state:
+   st.session_state.field_errors = set()
+# =========================================================
+# STYLE
+# =========================================================
+hero_bg_css = ""
+if hero_b64:
+   hero_bg_css = f'url("data:image/png;base64,{hero_b64}")'
+else:
+   hero_bg_css = "linear-gradient(135deg,#d71920 0%,#b31217 60%,#8f0f13 100%)"
+st.markdown(f"""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+html, body, [class*="css"] {{
+   font-family: 'Poppins', sans-serif;
+}}
+:root {{
+   --cimb-red: #D71920;
+   --cimb-dark: #B31217;
+   --cimb-light: #FDEBEC;
+   --soft-gray: #F4F5F7;
+   --mid-gray: #6B7280;
+   --border: #E5E7EB;
+   --text: #1F2937;
+   --danger: #d71920;
+}}
+.stApp {{
+   background: #ffffff;
+}}
+.top-actions {{
+   text-align: right;
+   font-weight: 600;
+   color: #374151;
+   font-size: 14px;
+   padding-top: 10px;
+}}
+.hero {{
+   background: linear-gradient(135deg, #d71920 0%, #b31217 60%, #8f0f13 100%);
+   border-radius: 24px;
+   overflow: hidden;
+   margin-top: 12px;
+   margin-bottom: 18px;
+}}
+.hero-inner {{
+   display: grid;
+   grid-template-columns: 1.05fr 1fr;
+   min-height: 380px;
+}}
+.hero-left {{
+   background-image: {hero_bg_css};
+   background-size: cover;
+   background-position: center;
+   min-height: 380px;
+}}
+.hero-right {{
+   color: white;
+   padding: 42px 40px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}}
+.hero-kicker {{
+   font-size: 13px;
+   letter-spacing: 0.12em;
+   text-transform: uppercase;
+   opacity: 0.92;
+   margin-bottom: 10px;
+   font-weight: 700;
+}}
+.hero-title {{
+   font-size: 34px;
+   line-height: 1.15;
+   font-weight: 800;
+   margin-bottom: 14px;
+}}
+.hero-sub {{
+   font-size: 16px;
+   line-height: 1.7;
+   opacity: 0.96;
+   margin-bottom: 20px;
+}}
+.info-banner {{
+   background: white;
+   border: 1px solid var(--border);
+   border-radius: 18px;
+   padding: 18px;
+   margin: 6px 0 18px 0;
+   box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+}}
+.tabs-area {{
+   background: white;
+   border: 1px solid var(--border);
+   border-radius: 18px;
+   padding: 18px;
+   margin-bottom: 18px;
+   box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+}}
+.tab-panel {{
+   margin-top: 16px;
+   border: 1px solid #f0d6d8;
+   background: #fff8f8;
+   border-radius: 16px;
+   padding: 18px;
+}}
+.help-banner {{
+   background: #eeeeee;
+   border-radius: 20px;
+   padding: 24px;
+   margin-top: 12px;
+}}
+.help-title {{
+   font-size: 24px;
+   font-weight: 800;
+   margin-bottom: 18px;
+   color: #1f2937;
+}}
+.help-card {{
+   background: white;
+   border-radius: 16px;
+   border: 1px solid #ddd;
+   padding: 18px;
+   text-align: center;
+   min-height: 150px;
+}}
+.page-title {{
+   font-size: 30px;
+   font-weight: 800;
+   color: var(--cimb-red);
+   margin-bottom: 4px;
+}}
+.page-sub {{
+   color: var(--mid-gray);
+   margin-bottom: 10px;
+}}
+.form-card {{
+   background: white;
+   border: 1px solid var(--border);
+   border-radius: 18px;
+   padding: 20px;
+   margin-top: 12px;
+   box-shadow: 0 8px 22px rgba(0,0,0,0.04);
+}}
+.section-title {{
+   font-size: 20px;
+   font-weight: 800;
+   color: #111827;
+   margin-bottom: 4px;
+}}
+.section-subtitle {{
+   color: var(--mid-gray);
+   margin-bottom: 16px;
+   font-size: 14px;
+}}
+.summary-box {{
+   background: #fff8f8;
+   border: 1px solid #f3c6c8;
+   border-radius: 16px;
+   padding: 18px;
+   margin-top: 16px;
+}}
+.summary-block {{
+   background: white;
+   border: 1px solid #f0d4d6;
+   border-radius: 14px;
+   padding: 16px;
+   margin-bottom: 14px;
+}}
+.summary-row {{
+   display: flex;
+   justify-content: space-between;
+   gap: 20px;
+   padding: 8px 0;
+   border-bottom: 1px solid #f3f4f6;
+}}
+.summary-row:last-child {{
+   border-bottom: none;
+}}
+.summary-label {{
+   color: #6b7280;
+   font-weight: 600;
+   min-width: 280px;
+}}
+.summary-value {{
+   color: #111827;
+   font-weight: 500;
+   text-align: right;
+}}
+.step-pill {{
+   padding: 10px 12px;
+   border-radius: 999px;
+   border: 1px solid #f0c7ca;
+   color: #8f1d22;
+   background: white;
+   font-size: 13px;
+   font-weight: 700;
+   text-align: center;
+}}
+.step-pill.active {{
+   background: var(--cimb-red);
+   color: white;
+   border-color: var(--cimb-red);
+}}
+.step-pill.done {{
+   background: #fdebec;
+   color: var(--cimb-dark);
+   border-color: #f2b8bc;
+}}
+.menu-item {{
+   padding: 12px 10px;
+   border-radius: 10px;
+   border: 1px solid #efefef;
+   margin-bottom: 10px;
+   font-weight: 600;
+   background: #fff;
+}}
+.red-star {{
+   color: var(--cimb-red);
+   font-weight: 700;
+}}
+.field-error-box {{
+   border: 2px solid var(--danger);
+   border-radius: 14px;
+   padding: 10px 12px 2px 12px;
+   margin-bottom: 10px;
+   background: #fff5f5;
+}}
+.field-error-text {{
+   color: var(--danger);
+   font-size: 12px;
+   font-weight: 600;
+   margin-top: -4px;
+   margin-bottom: 8px;
+}}
+div[data-testid="stButton"] > button {{
+   border-radius: 12px;
+   font-weight: 700;
+   min-height: 44px;
+}}
+div[data-testid="stButton"] > button[kind="primary"] {{
+   background: linear-gradient(90deg, #E23A40 0%, #D71920 50%, #B31217 100%) !important;
+   color: white !important;
+   border: none !important;
+}}
+.stProgress > div > div > div > div {{
+   background-color: #D71920;
+}}
+</style>
+""", unsafe_allow_html=True)
 # =========================================================
 # HELPERS
 # =========================================================
 def go_home():
    st.session_state.screen = "landing"
    st.session_state.step = 0
+   st.session_state.field_errors = set()
 def label_required(text: str):
    return f"{text} *"
 def go_next():
@@ -387,59 +407,72 @@ def go_next():
 def go_back():
    if st.session_state.step > 0:
        st.session_state.step -= 1
+def summary_value(v):
+   if v is None or v == "":
+       return None
+   return str(v)
+def begin_error_box(key: str):
+   if key in st.session_state.field_errors:
+       st.markdown('<div class="field-error-box">', unsafe_allow_html=True)
+       return True
+   return False
+def end_error_box(key: str, message: str):
+   if key in st.session_state.field_errors:
+       st.markdown(f'<div class="field-error-text">{message}</div></div>', unsafe_allow_html=True)
 def yes_no(label, key):
+   started = begin_error_box(key)
    current = st.session_state.form.get(key)
    options = ["Yes", "No"]
    index = options.index(current) if current in options else None
    value = st.radio(label, options, index=index, horizontal=True, key=f"widget_{key}")
    st.session_state.form[key] = value
+   end_error_box(key, "This field is required.")
    return value
-def summary_value(v):
-   if v is None or v == "":
-       return "Not provided"
-   return str(v)
 def validate_step(step: int):
    d = st.session_state.form
-   errors = []
+   errors = set()
    if step == 0:
        if not d["Q1"]:
-           errors.append("Q1 is required.")
+           errors.add("Q1")
        if d["Q1"] != "Sole Proprietory":
            if not d["Q1a"]:
-               errors.append("Q1a is required.")
+               errors.add("Q1a")
            if d["Q1a"] == "Yes" and not d["Q1b"].strip():
-               errors.append("Q1b is required.")
+               errors.add("Q1b")
        if not d["Q2"]:
-           errors.append("Q2 is required.")
+           errors.add("Q2")
        if d["Q2"] == "No":
            if not d["Q2a"]:
-               errors.append("Q2a is required.")
+               errors.add("Q2a")
            if d["Q2a"] == "North Korea":
                st.session_state.show_restricted_dialog = True
-               return False, []
+               st.session_state.field_errors = set()
+               return False
    elif step == 1:
        for k in ["Q3", "Q4", "Q5", "Q6", "Q7"]:
            if not d[k]:
-               errors.append(f"{k} is required.")
+               errors.add(k)
    elif step == 2:
        if not d["Q8"]:
-           errors.append("Q8 is required.")
+           errors.add("Q8")
        if not d["Q9"].strip():
-           errors.append("Q9 is required.")
+           errors.add("Q9")
        if not d["Q10"].strip():
-           errors.append("Q10 is required.")
+           errors.add("Q10")
        if not d["Q11"]:
-           errors.append("Q11 is required.")
+           errors.add("Q11")
        if not d["Q12"]:
-           errors.append("Q12 is required.")
+           errors.add("Q12")
    elif step == 3:
        if not d["Q13"]:
-           errors.append("Q13 is required.")
-       if d["Q13"] == "Yes" and not d["Q13a"].strip():
-           errors.append("Q13a is required.")
-       if d["Q13"] == "Yes" and not d["Q13a"].strip().isdigit():
-           errors.append("Q13a must be numeric.")
-   return len(errors) == 0, errors
+           errors.add("Q13")
+       if d["Q13"] == "Yes":
+           if not d["Q13a"].strip():
+               errors.add("Q13a")
+           elif not d["Q13a"].strip().isdigit():
+               errors.add("Q13a")
+   st.session_state.field_errors = errors
+   return len(errors) == 0
 @st.dialog("Access Restricted")
 def restricted_popup():
    st.error("Access restricted for Country of Registration: North Korea.")
@@ -462,21 +495,27 @@ def submitted_popup():
 # =========================================================
 # TOP HEADER
 # =========================================================
-c1, c2, c3 = st.columns([1.5, 3, 2])
+c1, c2, c3 = st.columns([1.2, 3, 2])
 with c1:
    if st.session_state.screen == "landing":
-       if st.button("☰", use_container_width=False):
+       if st.button("☰", key="hamburger_btn"):
            st.session_state.show_menu = not st.session_state.show_menu
            st.rerun()
 with c2:
-   st.markdown('<div class="logo-wrap-center">', unsafe_allow_html=True)
-   if st.button("🏦 CIMB", key="go_home_logo"):
+   if logo_b64:
+       st.markdown(
+           f"""
+<div style="text-align:center;">
+<img src="data:image/png;base64,{logo_b64}" style="height:48px; margin-bottom:8px;">
+</div>
+           """,
+           unsafe_allow_html=True
+       )
+   if st.button("Home", key="go_home_logo"):
        go_home()
        st.rerun()
-   st.markdown('</div>', unsafe_allow_html=True)
 with c3:
    st.markdown('<div class="top-actions">🔍 Search&nbsp;&nbsp;&nbsp;&nbsp;👤 Login</div>', unsafe_allow_html=True)
-# menu side pane approximation
 if st.session_state.screen == "landing" and st.session_state.show_menu:
    with st.sidebar:
        st.markdown("## Menu")
@@ -507,7 +546,7 @@ if st.session_state.screen == "landing":
        """,
        unsafe_allow_html=True
    )
-   hero_btn_cols = st.columns([5, 1.4, 1.2])
+   hero_btn_cols = st.columns([5, 2.0, 0.8])
    with hero_btn_cols[1]:
        if st.button("I'm interested", type="primary", use_container_width=True):
            st.session_state.screen = "form"
@@ -525,31 +564,32 @@ if st.session_state.screen == "landing":
        """,
        unsafe_allow_html=True
    )
-   ex1, ex2, ex3 = st.columns([5, 1.2, 1])
-   with ex2:
+   login_cols = st.columns([5, 1.3, 0.7])
+   with login_cols[1]:
        st.button("Login", type="primary", use_container_width=True, key="existing_user_login")
-   st.markdown('<div class="icon-tabs-wrap">', unsafe_allow_html=True)
-   tab_labels = [f"{icon} {label}" for label, icon in TAB_OPTIONS.items()]
-   selected_tab = st.radio(
-       "Navigation Tabs",
-       tab_labels,
-       horizontal=True,
-       label_visibility="collapsed"
-   )
-   clean_tab = selected_tab.split(" ", 1)[1]
-   if clean_tab == "FAQ":
+   st.markdown('<div class="tabs-area">', unsafe_allow_html=True)
+   tab_cols = st.columns(4)
+   for idx, (label, icon) in enumerate(TAB_OPTIONS.items()):
+       with tab_cols[idx]:
+           is_active = st.session_state.active_tab == label
+           button_label = f"{icon} {label}"
+           if st.button(button_label, key=f"tab_{label}", use_container_width=True, type="primary" if is_active else "secondary"):
+               st.session_state.active_tab = label
+               st.rerun()
+   st.markdown('<div class="tab-panel">', unsafe_allow_html=True)
+   if st.session_state.active_tab == "FAQ":
        st.markdown("### Frequently Asked Questions")
-       st.write("Find answers on eligibility, required documents, turnaround time, and application steps.")
-   elif clean_tab == "Products and Packages":
-       st.markdown("### Products and Packages")
-       st.write("Explore business current accounts, SME banking services, collections, and payment solutions.")
-   elif clean_tab == "First Time Login Guide":
+       st.write("Find answers on eligibility, required documents, application turnaround time, and the onboarding journey.")
+   elif st.session_state.active_tab == "Products & Packages":
+       st.markdown("### Products & Packages")
+       st.write("Explore business current accounts, SME solutions, cash management options, and digital banking packages.")
+   elif st.session_state.active_tab == "First Time Login Guide":
        st.markdown("### First Time Login Guide")
-       st.write("Learn how to register, verify your identity, set credentials, and log in securely.")
-   elif clean_tab == "User Guides and Forms":
-       st.markdown("### User Guides and Forms")
-       st.write("Access onboarding guides, service forms, document checklists, and support material.")
-   st.markdown('</div>', unsafe_allow_html=True)
+       st.write("Learn how to register, verify your business profile, create credentials, and access BizChannel securely.")
+   elif st.session_state.active_tab == "User Guides & Forms":
+       st.markdown("### User Guides & Forms")
+       st.write("Access onboarding guides, reference documents, user guides, and required forms for account application.")
+   st.markdown('</div></div>', unsafe_allow_html=True)
    st.markdown('<div class="help-banner">', unsafe_allow_html=True)
    st.markdown('<div class="help-title">Need more information?</div>', unsafe_allow_html=True)
    h1, h2, h3, h4 = st.columns(4)
@@ -568,7 +608,7 @@ if st.session_state.screen == "landing":
 else:
    st.markdown('<div class="page-title">Pre-screening questionnaire</div>', unsafe_allow_html=True)
    st.markdown(
-       '<div class="page-sub">Complete each section and click Next to continue. Fields marked with <span class="mandatory">*</span> are mandatory.</div>',
+       '<div class="page-sub">Complete each section and click Next to continue. Fields marked with <span class="red-star">*</span> are mandatory.</div>',
        unsafe_allow_html=True
    )
    st.progress((st.session_state.step + 1) / len(PAGES))
@@ -580,46 +620,49 @@ else:
        elif i == st.session_state.step:
            cls += " active"
        step_cols[i].markdown(f'<div class="{cls}">{i+1}. {page}</div>', unsafe_allow_html=True)
-   # page 1
+   d = st.session_state.form
    if st.session_state.step == 0:
        st.markdown('<div class="form-card">', unsafe_allow_html=True)
        st.markdown('<div class="section-title">Company Background</div>', unsafe_allow_html=True)
        st.markdown('<div class="section-subtitle">Tell us about your business type and registration profile.</div>', unsafe_allow_html=True)
-       d = st.session_state.form
+       begin_error_box("Q1")
        d["Q1"] = st.selectbox(
            label_required("Q1. Type of Business"),
            BUSINESS_TYPES,
            index=BUSINESS_TYPES.index(d["Q1"]) if d["Q1"] in BUSINESS_TYPES else None,
            placeholder="Select one"
        )
+       end_error_box("Q1", "This field is required.")
        if d["Q1"] != "Sole Proprietory":
            yes_no(label_required("Q1a. Is your company a subsidiary of a Public Listed company listed on the Main Board / Large Firms / MNCs / GLCs / MKDs / State owned enterprises?"), "Q1a")
+           begin_error_box("Q1b")
            if d["Q1a"] == "Yes":
                d["Q1b"] = st.text_input(label_required("Q1b. Name of Parent Company"), value=d["Q1b"])
            else:
                d["Q1b"] = ""
+           end_error_box("Q1b", "This field is required.")
        else:
            d["Q1a"] = None
            d["Q1b"] = ""
        yes_no(label_required("Q2. Malaysia Incorporated Business?"), "Q2")
        if d["Q2"] == "No":
+           begin_error_box("Q2a")
            d["Q2a"] = st.selectbox(
                label_required("Q2a. Country of Registration"),
                COUNTRIES,
                index=COUNTRIES.index(d["Q2a"]) if d["Q2a"] in COUNTRIES else None,
                placeholder="Select country"
            )
+           end_error_box("Q2a", "This field is required.")
            if d["Q2a"] == "North Korea":
                st.session_state.show_restricted_dialog = True
        else:
            d["Q2a"] = None
-       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
        st.markdown('</div>', unsafe_allow_html=True)
    elif st.session_state.step == 1:
        st.markdown('<div class="form-card">', unsafe_allow_html=True)
        st.markdown('<div class="section-title">Compliance & Risk Screening</div>', unsafe_allow_html=True)
        st.markdown('<div class="section-subtitle">Please answer the following compliance questions.</div>', unsafe_allow_html=True)
-       d = st.session_state.form
        st.markdown("**Q3. Listed higher-risk countries / jurisdictions**")
        with st.expander("View listed countries / jurisdictions"):
            st.write(", ".join(RISK_COUNTRY_LIST))
@@ -628,26 +671,31 @@ else:
        yes_no(label_required("Q5. Are any directors/shareholders/signatories politically exposed persons (PEPs)?"), "Q5")
        yes_no(label_required("Q6. Do you or your directors have ongoing legal cases related to fraud, insolvency or financial crimes?"), "Q6")
        yes_no(label_required("Q7. Has your business ever been subject to compliance actions or suspicious activity reporting?"), "Q7")
-       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
        st.markdown('</div>', unsafe_allow_html=True)
    elif st.session_state.step == 2:
        st.markdown('<div class="form-card">', unsafe_allow_html=True)
        st.markdown('<div class="section-title">Business Profile & Details</div>', unsafe_allow_html=True)
        st.markdown('<div class="section-subtitle">Provide your business details below.</div>', unsafe_allow_html=True)
-       d = st.session_state.form
+       begin_error_box("Q8")
        d["Q8"] = st.selectbox(
            label_required("Q8. Nature of Business / Industry"),
            INDUSTRIES,
            index=INDUSTRIES.index(d["Q8"]) if d["Q8"] in INDUSTRIES else None,
            placeholder="Select one"
        )
+       end_error_box("Q8", "This field is required.")
        c1, c2 = st.columns(2)
        with c1:
+           begin_error_box("Q9")
            d["Q9"] = st.text_input(label_required("Q9. Registered Business Name"), value=d["Q9"])
+           end_error_box("Q9", "This field is required.")
        with c2:
+           begin_error_box("Q10")
            d["Q10"] = st.text_input(label_required("Q10. Business Registration Number"), value=d["Q10"])
+           end_error_box("Q10", "This field is required.")
        c3, c4 = st.columns(2)
        with c3:
+           begin_error_box("Q11")
            owner_options = ["1", "2-10", "11-50", ">50"]
            d["Q11"] = st.selectbox(
                label_required("Q11. Number of shareholders / owners in the company"),
@@ -655,35 +703,40 @@ else:
                index=owner_options.index(d["Q11"]) if d["Q11"] in owner_options else None,
                placeholder="Select one"
            )
+           end_error_box("Q11", "This field is required.")
        with c4:
            yes_no(label_required("Q12. Bumiputera-controlled Company? (>25% shareholding)"), "Q12")
-       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
        st.markdown('</div>', unsafe_allow_html=True)
    elif st.session_state.step == 3:
        st.markdown('<div class="form-card">', unsafe_allow_html=True)
        st.markdown('<div class="section-title">Banking Relationship</div>', unsafe_allow_html=True)
        st.markdown('<div class="section-subtitle">Let us know if you already bank with CIMB.</div>', unsafe_allow_html=True)
-       d = st.session_state.form
        yes_no(label_required("Q13. Does your company have an existing Business Current Account with CIMB?"), "Q13")
        if d["Q13"] == "Yes":
+           begin_error_box("Q13a")
            d["Q13a"] = st.text_input(
                label_required("Q13a. Existing CIMB Business Current Account Number"),
                value=d["Q13a"],
                placeholder="Numeric account number"
            )
+           if "Q13a" in st.session_state.field_errors and d["Q13a"].strip() and not d["Q13a"].strip().isdigit():
+               end_error_box("Q13a", "Account number must be numeric.")
+           else:
+               end_error_box("Q13a", "This field is required.")
        else:
            d["Q13a"] = ""
-       st.markdown('<div class="small-note"><span class="mandatory">*</span> is mandatory</div>', unsafe_allow_html=True)
        st.markdown('</div>', unsafe_allow_html=True)
    elif st.session_state.step == 4:
-       d = st.session_state.form
        st.markdown('<div class="form-card">', unsafe_allow_html=True)
        st.markdown('<div class="section-title">Review & Submit</div>', unsafe_allow_html=True)
        st.markdown('<div class="section-subtitle">Please review your information before submission.</div>', unsafe_allow_html=True)
        st.markdown('<div class="summary-box">', unsafe_allow_html=True)
        def section_block(title, rows):
+           filtered_rows = [(label, value) for label, value in rows if summary_value(value) is not None]
+           if not filtered_rows:
+               return
            st.markdown(f'<div class="summary-block"><div style="font-weight:800; font-size:18px; margin-bottom:10px;">{title}</div>', unsafe_allow_html=True)
-           for label, value in rows:
+           for label, value in filtered_rows:
                st.markdown(
                    f'''
 <div class="summary-row">
@@ -719,37 +772,32 @@ else:
            ("Existing CIMB Business Current Account", d["Q13"]),
            ("Existing CIMB Business Current Account Number", d["Q13a"]),
        ])
-       st.markdown('</div>', unsafe_allow_html=True)
-       st.markdown('</div>', unsafe_allow_html=True)
-   # nav buttons
+       st.markdown('</div></div>', unsafe_allow_html=True)
+   # nav
    c1, c2, c3 = st.columns([1, 1, 5])
    with c1:
        if st.session_state.step > 0:
            if st.button("← Back", use_container_width=True):
+               st.session_state.field_errors = set()
                go_back()
                st.rerun()
    with c2:
        if st.session_state.step < len(PAGES) - 1:
            if st.button("Next", type="primary", use_container_width=True):
-               valid, errors = validate_step(st.session_state.step)
-               if valid:
+               if validate_step(st.session_state.step):
                    go_next()
                    st.rerun()
                else:
-                   for err in errors:
-                       st.error(err)
+                   st.rerun()
        else:
            if st.button("Submit", type="primary", use_container_width=True):
-               valid, errors = validate_step(3)
-               if valid:
+               if validate_step(3):
                    st.session_state.show_submit_dialog = True
                    st.rerun()
                else:
-                   for err in errors:
-                       st.error(err)
+                   st.rerun()
 # dialogs
 if st.session_state.show_restricted_dialog:
    restricted_popup()
 if st.session_state.show_submit_dialog:
    submitted_popup()
-st.markdown('<div class="footer-space"></div>', unsafe_allow_html=True)
